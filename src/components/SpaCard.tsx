@@ -93,7 +93,7 @@ const SpaCard = ({ spa, isExpanded, onToggle }: SpaCardProps) => {
                 <Thermometer className="w-5 h-5 text-primary" />
                 Thermal Suite Facilities
               </h4>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <div className="space-y-2">
                 {spa.thermalFacilities.map((facility, index) => (
                   <div key={index} className="flex items-center gap-2 text-sm">
                     <span className="w-2 h-2 rounded-full bg-primary shrink-0" />
