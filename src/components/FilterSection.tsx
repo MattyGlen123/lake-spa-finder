@@ -7,7 +7,6 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
-import { Checkbox } from '@/components/ui/checkbox';
 
 interface FilterSectionProps {
   selectedBusinessModels: BusinessModel[];
@@ -40,70 +39,80 @@ const FilterSection = ({
     'hybrid',
   ];
 
-  const getBusinessModelColors = (model: BusinessModel) => {
-    const colors: Record<BusinessModel, string> = {
-      'free-with-booking': 'bg-spa-green text-spa-green-foreground',
-      'paid-extra': 'bg-spa-yellow text-spa-yellow-foreground',
-      'day-passes': 'bg-spa-blue text-spa-blue-foreground',
-      'guests-only': 'bg-spa-red text-spa-red-foreground',
-      'hybrid': 'bg-spa-purple text-spa-purple-foreground',
-    };
-    return colors[model];
+  const getBusinessModelLabel = () => {
+    if (selectedBusinessModels.length === 0) return 'All Access Types';
+    if (selectedBusinessModels.length === 1) {
+      return businessModelConfig[selectedBusinessModels[0]].label;
+    }
+    return `${selectedBusinessModels.length} selected`;
+  };
+
+  const getFacilitiesLabel = () => {
+    if (selectedFacilities.length === 0) return 'Any Facilities';
+    if (selectedFacilities.length === 1) {
+      const facility = facilityOptions.find(f => f.key === selectedFacilities[0]);
+      return facility?.label || 'Any Facilities';
+    }
+    return `${selectedFacilities.length} selected`;
   };
 
   return (
     <section className="bg-filter-bg py-6 md:py-8">
       <div className="container mx-auto px-4">
         <div className="flex flex-col gap-6">
-          {/* Business Model Filter - Most Prominent */}
-          <div>
-            <label className="block text-sm font-semibold text-foreground mb-3">
-              Spa Access:
-            </label>
-            <div className="flex flex-wrap gap-2">
-              {businessModels.map((model) => {
-                const config = businessModelConfig[model];
-                const isActive = selectedBusinessModels.includes(model);
-                
-                return (
-                  <button
-                    key={model}
-                    onClick={() => onBusinessModelChange(model)}
-                    className={`
-                      filter-pill
-                      ${isActive ? `${getBusinessModelColors(model)} border-transparent` : ''}
-                    `}
-                    aria-pressed={isActive}
-                  >
-                    <span>{config.dot}</span>
-                    <span>{config.label}</span>
-                    {isActive && <Check className="w-4 h-4 ml-1" />}
-                  </button>
-                );
-              })}
+          {/* Filter Row */}
+          <div className="flex flex-col sm:flex-row gap-4">
+            {/* Spa Access Filter */}
+            <div className="flex-1">
+              <label className="block text-sm font-semibold text-foreground mb-2">
+                Spa Access:
+              </label>
+              <DropdownMenu>
+                <DropdownMenuTrigger className="w-full flex items-center justify-between gap-2 px-4 py-2.5 bg-background border border-border rounded-lg text-sm font-medium hover:border-primary/50 transition-colors">
+                  <span className="truncate">{getBusinessModelLabel()}</span>
+                  <ChevronDown className="w-4 h-4 text-muted-foreground shrink-0" />
+                </DropdownMenuTrigger>
+                <DropdownMenuContent className="w-64 bg-background border border-border">
+                  {businessModels.map((model) => {
+                    const config = businessModelConfig[model];
+                    const isSelected = selectedBusinessModels.includes(model);
+                    return (
+                      <DropdownMenuItem
+                        key={model}
+                        onClick={() => onBusinessModelChange(model)}
+                        className="cursor-pointer flex items-center justify-between"
+                      >
+                        <span className="flex items-center gap-2">
+                          <span>{config.dot}</span>
+                          <span>{config.label}</span>
+                        </span>
+                        {isSelected && <Check className="w-4 h-4 text-primary" />}
+                      </DropdownMenuItem>
+                    );
+                  })}
+                </DropdownMenuContent>
+              </DropdownMenu>
             </div>
-          </div>
 
-          {/* Location and Facilities Row */}
-          <div className="flex flex-col sm:flex-row gap-6">
             {/* Location Filter */}
             <div className="flex-1">
-              <label className="block text-sm font-semibold text-foreground mb-3">
+              <label className="block text-sm font-semibold text-foreground mb-2">
                 Location:
               </label>
               <DropdownMenu>
-                <DropdownMenuTrigger className="w-full sm:w-auto flex items-center justify-between gap-2 px-4 py-2.5 bg-background border border-border rounded-lg text-sm font-medium hover:border-primary/50 transition-colors">
-                  <span>{selectedLocation}</span>
-                  <ChevronDown className="w-4 h-4 text-muted-foreground" />
+                <DropdownMenuTrigger className="w-full flex items-center justify-between gap-2 px-4 py-2.5 bg-background border border-border rounded-lg text-sm font-medium hover:border-primary/50 transition-colors">
+                  <span className="truncate">{selectedLocation}</span>
+                  <ChevronDown className="w-4 h-4 text-muted-foreground shrink-0" />
                 </DropdownMenuTrigger>
                 <DropdownMenuContent className="w-56 bg-background border border-border">
                   {locations.map((location) => (
                     <DropdownMenuItem
                       key={location}
                       onClick={() => onLocationChange(location)}
-                      className={`cursor-pointer ${selectedLocation === location ? 'bg-accent text-primary font-medium' : ''}`}
+                      className="cursor-pointer flex items-center justify-between"
                     >
-                      {location}
+                      <span>{location}</span>
+                      {selectedLocation === location && <Check className="w-4 h-4 text-primary" />}
                     </DropdownMenuItem>
                   ))}
                 </DropdownMenuContent>
@@ -112,32 +121,35 @@ const FilterSection = ({
 
             {/* Facilities Filter */}
             <div className="flex-1">
-              <label className="block text-sm font-semibold text-foreground mb-3">
+              <label className="block text-sm font-semibold text-foreground mb-2">
                 Must have:
               </label>
-              <div className="flex flex-wrap gap-x-6 gap-y-2">
-                {facilityOptions.map((facility) => (
-                  <div key={facility.key} className="flex items-center gap-2">
-                    <Checkbox
-                      id={facility.key}
-                      checked={selectedFacilities.includes(facility.key)}
-                      onCheckedChange={() => onFacilityChange(facility.key)}
-                      className="border-border data-[state=checked]:bg-primary data-[state=checked]:border-primary"
-                    />
-                    <label
-                      htmlFor={facility.key}
-                      className="text-sm text-foreground cursor-pointer"
-                    >
-                      {facility.label}
-                    </label>
-                  </div>
-                ))}
-              </div>
+              <DropdownMenu>
+                <DropdownMenuTrigger className="w-full flex items-center justify-between gap-2 px-4 py-2.5 bg-background border border-border rounded-lg text-sm font-medium hover:border-primary/50 transition-colors">
+                  <span className="truncate">{getFacilitiesLabel()}</span>
+                  <ChevronDown className="w-4 h-4 text-muted-foreground shrink-0" />
+                </DropdownMenuTrigger>
+                <DropdownMenuContent className="w-56 bg-background border border-border">
+                  {facilityOptions.map((facility) => {
+                    const isSelected = selectedFacilities.includes(facility.key);
+                    return (
+                      <DropdownMenuItem
+                        key={facility.key}
+                        onClick={() => onFacilityChange(facility.key)}
+                        className="cursor-pointer flex items-center justify-between"
+                      >
+                        <span>{facility.label}</span>
+                        {isSelected && <Check className="w-4 h-4 text-primary" />}
+                      </DropdownMenuItem>
+                    );
+                  })}
+                </DropdownMenuContent>
+              </DropdownMenu>
             </div>
           </div>
 
           {/* Results Count and Clear */}
-          <div className="flex items-center justify-between pt-2 border-t border-border/50">
+          <div className="flex items-center justify-between pt-4 border-t border-border/50">
             <p className="text-sm text-muted-foreground">
               Showing <span className="font-semibold text-foreground">{filteredCount}</span> of {totalCount} spas
             </p>
