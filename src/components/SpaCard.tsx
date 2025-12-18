@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from 'react';
-import { MapPin, ChevronDown, ChevronUp, Check, Thermometer, Waves, Shield, Lightbulb } from 'lucide-react';
+import { MapPin, ChevronDown, ChevronUp, Check, Thermometer, Waves, Shield, Lightbulb, ExternalLink } from 'lucide-react';
 import { Spa, businessModelConfig, BusinessModel } from '@/types/spa';
 
 // Import spa images
@@ -65,7 +65,15 @@ const SpaCard = ({ spa, isExpanded, onToggle }: SpaCardProps) => {
       <div className="p-6">
         {/* Spa Name */}
         <h3 className="text-xl font-semibold text-foreground mb-1">
-          {spa.name}
+          <a 
+            href={spa.websiteUrl} 
+            target="_blank" 
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-2 hover:text-primary transition-colors"
+          >
+            {spa.name}
+            <ExternalLink className="w-4 h-4" />
+          </a>
         </h3>
 
         {/* Location */}

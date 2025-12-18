@@ -19,6 +19,7 @@ export interface Spa {
   id: string;
   name: string;
   location: string;
+  websiteUrl: string;
   businessModel: BusinessModel;
   businessModelText: string;
   imageUrl: string;
