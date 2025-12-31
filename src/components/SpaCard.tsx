@@ -1,7 +1,7 @@
 import { useState, useRef, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import { MapPin, ChevronDown, ChevronUp, Check, Thermometer, Waves, Shield, Lightbulb, ExternalLink } from 'lucide-react';
 import { Spa, businessModelConfig, BusinessModel } from '@/types/spa';
-
 // Import spa images
 import spaArmathwaite from '@/assets/spa-armathwaite.jpg';
 import spaAnotherPlace from '@/assets/spa-another-place.jpg';
@@ -67,15 +67,12 @@ const SpaCard = ({ spa, isExpanded, onToggle }: SpaCardProps) => {
         <div className="p-6">
           {/* Spa Name */}
           <h3 className="text-xl font-semibold text-foreground mb-1">
-            <a 
-              href={spa.websiteUrl} 
-              target="_blank" 
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 hover:text-primary transition-colors"
+            <Link 
+              to={`/spa/${spa.id}`}
+              className="hover:text-primary transition-colors"
             >
               {spa.name}
-              <ExternalLink className="w-4 h-4" />
-            </a>
+            </Link>
           </h3>
 
           {/* Location */}
@@ -137,15 +134,12 @@ const SpaCard = ({ spa, isExpanded, onToggle }: SpaCardProps) => {
             <div className="flex-1">
               {/* Spa Name */}
               <h3 className="text-2xl font-semibold text-foreground mb-1">
-                <a 
-                  href={spa.websiteUrl} 
-                  target="_blank" 
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 hover:text-primary transition-colors"
+                <Link 
+                  to={`/spa/${spa.id}`}
+                  className="hover:text-primary transition-colors"
                 >
                   {spa.name}
-                  <ExternalLink className="w-5 h-5" />
-                </a>
+                </Link>
               </h3>
 
               {/* Location */}
