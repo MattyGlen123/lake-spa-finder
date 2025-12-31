@@ -128,26 +128,26 @@ const SpaDetail = () => {
         </section>
 
         {/* Quick Facts Bar */}
-        <section className="bg-muted border-y border-border">
+        <section className="bg-muted/50 border-y border-border/50">
           <div className="container mx-auto px-4 lg:px-8 py-6">
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-              <div className="flex items-center gap-3 p-4 bg-card rounded-lg">
-                <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center">
-                  <Users className="w-5 h-5 text-primary" />
+              <div className="flex items-center gap-3 p-4 bg-card/80 rounded-lg border border-border/30">
+                <div className="w-10 h-10 rounded-full bg-muted flex items-center justify-center">
+                  <Users className="w-5 h-5 text-muted-foreground" />
                 </div>
                 <div>
-                  <p className="text-sm text-muted-foreground">Guest Access</p>
-                  <p className="font-semibold text-foreground">{spa.businessModelText}</p>
+                  <p className="text-xs text-muted-foreground uppercase tracking-wide">Guest Access</p>
+                  <p className="font-medium text-foreground">{spa.businessModelText}</p>
                 </div>
               </div>
               
-              <div className="flex items-center gap-3 p-4 bg-card rounded-lg">
-                <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center">
-                  <Clock className="w-5 h-5 text-primary" />
+              <div className="flex items-center gap-3 p-4 bg-card/80 rounded-lg border border-border/30">
+                <div className="w-10 h-10 rounded-full bg-muted flex items-center justify-center">
+                  <Clock className="w-5 h-5 text-muted-foreground" />
                 </div>
                 <div>
-                  <p className="text-sm text-muted-foreground">Day Passes</p>
-                  <p className="font-semibold text-foreground">
+                  <p className="text-xs text-muted-foreground uppercase tracking-wide">Day Passes</p>
+                  <p className="font-medium text-foreground">
                     {spa.businessModel === 'day-passes' || spa.businessModel === 'hybrid' 
                       ? 'Available' 
                       : 'Not Available'}
@@ -156,13 +156,13 @@ const SpaDetail = () => {
               </div>
               
               {ageRestriction && (
-                <div className="flex items-center gap-3 p-4 bg-card rounded-lg">
-                  <div className="w-10 h-10 rounded-full bg-spa-yellow/20 flex items-center justify-center">
-                    <AlertTriangle className="w-5 h-5 text-spa-yellow" />
+                <div className="flex items-center gap-3 p-4 bg-card/80 rounded-lg border border-border/30">
+                  <div className="w-10 h-10 rounded-full bg-muted flex items-center justify-center">
+                    <AlertTriangle className="w-5 h-5 text-muted-foreground" />
                   </div>
                   <div>
-                    <p className="text-sm text-muted-foreground">Age Restriction</p>
-                    <p className="font-semibold text-foreground">{ageRestriction.replace('Age restriction: ', '')}</p>
+                    <p className="text-xs text-muted-foreground uppercase tracking-wide">Age Restriction</p>
+                    <p className="font-medium text-foreground">{ageRestriction.replace('Age restriction: ', '')}</p>
                   </div>
                 </div>
               )}
@@ -171,12 +171,12 @@ const SpaDetail = () => {
         </section>
 
         {/* Main Content */}
-        <div className="container mx-auto px-4 lg:px-8 py-12">
+        <div className="container mx-auto px-4 lg:px-8 py-12 bg-muted/30">
           <div className="max-w-4xl">
             {/* Back Button */}
             <Link 
               to="/" 
-              className="inline-flex items-center gap-2 text-muted-foreground hover:text-primary transition-colors mb-8"
+              className="inline-flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors mb-8"
             >
               <ArrowLeft className="w-4 h-4" />
               Back to All Spas
@@ -185,8 +185,10 @@ const SpaDetail = () => {
             {/* Thermal Facilities */}
             {spa.thermalFacilities.length > 0 && (
               <section className="mb-12">
-                <h2 className="flex items-center gap-3 text-2xl font-bold text-foreground mb-6">
-                  <Thermometer className="w-6 h-6 text-primary" />
+                <h2 className="flex items-center gap-3 text-xl font-semibold text-foreground mb-6">
+                  <div className="w-8 h-8 rounded-full bg-muted flex items-center justify-center">
+                    <Thermometer className="w-4 h-4 text-muted-foreground" />
+                  </div>
                   Thermal Facilities
                 </h2>
                 <div className="prose prose-lg text-foreground">
@@ -194,12 +196,12 @@ const SpaDetail = () => {
                     {spa.name} features a comprehensive thermal suite designed for complete relaxation and rejuvenation. 
                     The facilities include a range of heat experiences to suit every preference.
                   </p>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-3 mt-6">
                     {spa.thermalFacilities.map((facility, index) => (
-                      <div key={index} className="flex items-start gap-3 p-4 bg-muted rounded-lg">
-                        <span className="w-2 h-2 rounded-full bg-primary mt-2 shrink-0" />
+                      <div key={index} className="flex items-start gap-3 p-4 bg-card rounded-lg border border-border/40">
+                        <span className="w-1.5 h-1.5 rounded-full bg-muted-foreground mt-2 shrink-0" />
                         <div>
-                          <h3 className="font-semibold text-foreground">{facility.name}</h3>
+                          <h3 className="font-medium text-foreground">{facility.name}</h3>
                           <p className="text-sm text-muted-foreground">{facility.details}</p>
                         </div>
                       </div>
@@ -212,8 +214,10 @@ const SpaDetail = () => {
             {/* Pools & Water Features */}
             {spa.poolFeatures.length > 0 && (
               <section className="mb-12">
-                <h2 className="flex items-center gap-3 text-2xl font-bold text-foreground mb-6">
-                  <Waves className="w-6 h-6 text-primary" />
+                <h2 className="flex items-center gap-3 text-xl font-semibold text-foreground mb-6">
+                  <div className="w-8 h-8 rounded-full bg-muted flex items-center justify-center">
+                    <Waves className="w-4 h-4 text-muted-foreground" />
+                  </div>
                   Pools & Water Features
                 </h2>
                 <div className="prose prose-lg text-foreground">
@@ -221,11 +225,11 @@ const SpaDetail = () => {
                     The water facilities at {spa.name} offer a variety of aquatic experiences, 
                     from swimming pools to hydrotherapy features.
                   </p>
-                  <div className="space-y-4 mt-6">
+                  <div className="space-y-3 mt-6">
                     {spa.poolFeatures.map((pool, index) => (
-                      <div key={index} className="p-4 bg-muted rounded-lg">
-                        <h3 className="font-semibold text-foreground mb-1">{pool.name}</h3>
-                        <p className="text-muted-foreground">{pool.details}</p>
+                      <div key={index} className="p-4 bg-card rounded-lg border border-border/40">
+                        <h3 className="font-medium text-foreground mb-1">{pool.name}</h3>
+                        <p className="text-muted-foreground text-sm">{pool.details}</p>
                       </div>
                     ))}
                   </div>
@@ -236,8 +240,10 @@ const SpaDetail = () => {
             {/* Treatment & Relaxation */}
             {spa.goodToKnow.length > 0 && (
               <section className="mb-12">
-                <h2 className="flex items-center gap-3 text-2xl font-bold text-foreground mb-6">
-                  <Sparkles className="w-6 h-6 text-primary" />
+                <h2 className="flex items-center gap-3 text-xl font-semibold text-foreground mb-6">
+                  <div className="w-8 h-8 rounded-full bg-muted flex items-center justify-center">
+                    <Sparkles className="w-4 h-4 text-muted-foreground" />
+                  </div>
                   Treatment & Relaxation
                 </h2>
                 <div className="prose prose-lg text-foreground">
@@ -245,10 +251,10 @@ const SpaDetail = () => {
                     Beyond the thermal suite and pools, {spa.name} offers additional amenities 
                     to enhance your spa experience.
                   </p>
-                  <ul className="space-y-3 mt-6">
+                  <ul className="space-y-2 mt-6">
                     {spa.goodToKnow.map((info, index) => (
-                      <li key={index} className="flex items-start gap-3 text-foreground">
-                        <span className="w-2 h-2 rounded-full bg-primary mt-2 shrink-0" />
+                      <li key={index} className="flex items-start gap-3 text-foreground text-sm">
+                        <span className="w-1.5 h-1.5 rounded-full bg-muted-foreground mt-2 shrink-0" />
                         {info}
                       </li>
                     ))}
@@ -259,16 +265,18 @@ const SpaDetail = () => {
 
             {/* Access & Pricing - Critical Section */}
             <section className="mb-12">
-              <h2 className="flex items-center gap-3 text-2xl font-bold text-foreground mb-6">
-                <Shield className="w-6 h-6 text-primary" />
+              <h2 className="flex items-center gap-3 text-xl font-semibold text-foreground mb-6">
+                <div className="w-8 h-8 rounded-full bg-muted flex items-center justify-center">
+                  <Shield className="w-4 h-4 text-muted-foreground" />
+                </div>
                 Access & Pricing
               </h2>
-              <div className={`p-6 rounded-xl border-2 mb-6 ${getBadgeClass(spa.businessModel)} bg-opacity-10`}>
-                <div className="flex items-center gap-3 mb-3">
-                  <span className="text-2xl">{config.dot}</span>
-                  <span className="text-lg font-bold">{config.label}</span>
+              <div className={`p-5 rounded-lg border mb-6 ${getBadgeClass(spa.businessModel)}`}>
+                <div className="flex items-center gap-2 mb-2">
+                  <span className="text-xl">{config.dot}</span>
+                  <span className="font-semibold">{config.label}</span>
                 </div>
-                <p className="text-lg">{spa.businessModelText}</p>
+                <p className="text-sm opacity-90">{spa.businessModelText}</p>
               </div>
               
               <div className="prose prose-lg text-foreground">
@@ -276,11 +284,11 @@ const SpaDetail = () => {
                   Understanding the access policy is essential when planning your visit. 
                   Here's everything you need to know about accessing the spa at {spa.name}.
                 </p>
-                <div className="space-y-3 mt-6">
+                <div className="space-y-2 mt-6">
                   {spa.accessPolicy.map((policy, index) => (
-                    <div key={index} className="flex items-start gap-3 p-3 bg-muted rounded-lg">
-                      <span className="text-muted-foreground">•</span>
-                      <span className="text-foreground">{policy}</span>
+                    <div key={index} className="flex items-start gap-3 p-3 bg-card rounded-lg border border-border/40">
+                      <span className="text-muted-foreground text-sm">•</span>
+                      <span className="text-foreground text-sm">{policy}</span>
                     </div>
                   ))}
                 </div>
@@ -290,28 +298,28 @@ const SpaDetail = () => {
             {/* Age Restrictions */}
             {ageRestriction && (
               <section className="mb-12">
-                <div className="p-6 bg-spa-yellow/10 border border-spa-yellow/30 rounded-xl">
-                  <h3 className="flex items-center gap-2 text-lg font-bold text-foreground mb-2">
-                    <AlertTriangle className="w-5 h-5 text-spa-yellow" />
+                <div className="p-5 bg-muted/60 border border-border/50 rounded-lg">
+                  <h3 className="flex items-center gap-2 text-sm font-semibold text-foreground mb-2">
+                    <AlertTriangle className="w-4 h-4 text-muted-foreground" />
                     Age Restrictions
                   </h3>
-                  <p className="text-foreground">{ageRestriction}</p>
+                  <p className="text-muted-foreground text-sm">{ageRestriction}</p>
                 </div>
               </section>
             )}
 
             {/* CTA */}
-            <section className="mb-12 pt-8 border-t border-border">
+            <section className="mb-12 pt-8 border-t border-border/50">
               <a
                 href={spa.websiteUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center justify-center gap-3 w-full md:w-auto px-8 py-4 bg-primary text-primary-foreground text-lg font-semibold rounded-xl hover:bg-primary/90 transition-colors"
+                className="inline-flex items-center justify-center gap-3 w-full md:w-auto px-8 py-4 bg-foreground text-background text-base font-medium rounded-lg hover:bg-foreground/90 transition-colors"
               >
                 Visit {spa.name} Website
-                <ExternalLink className="w-5 h-5" />
+                <ExternalLink className="w-4 h-4" />
               </a>
-              <p className="text-sm text-muted-foreground mt-3">
+              <p className="text-xs text-muted-foreground mt-3">
                 Opens external website in a new tab
               </p>
             </section>
